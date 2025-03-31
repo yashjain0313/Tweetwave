@@ -52,22 +52,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-
     coverImg: {
       type: String,
       default: "",
     },
-
     bio: {
       type: String,
       default: "",
     },
-
     link: {
       type: String,
       default: "",
     },
-
     likedPosts: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -75,6 +71,22 @@ const userSchema = new mongoose.Schema(
         default: [],
       },
     ],
+    resetPasswordToken: {
+      type: String,
+      default: undefined,
+    },
+    resetPasswordExpires: {
+      type: Date,
+      default: undefined,
+    },
+    otp: {
+      type: String,
+      default: undefined,
+    },
+    otpExpires: {
+      type: Date,
+      default: undefined,
+    },
   },
   { timestamps: true }
 );

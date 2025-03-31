@@ -145,7 +145,7 @@ const Signup = () => {
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-white sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none sm:text-sm sm:leading-6"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -166,7 +166,7 @@ const Signup = () => {
                     required
                     value={formData.username}
                     onChange={handleInputChange}
-                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-white sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none sm:text-sm sm:leading-6"
                     placeholder="Choose a username"
                   />
                 </div>
@@ -187,7 +187,7 @@ const Signup = () => {
                     required
                     value={formData.fullname}
                     onChange={handleInputChange}
-                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-white sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none sm:text-sm sm:leading-6"
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -208,7 +208,7 @@ const Signup = () => {
                     required
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-white sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none sm:text-sm sm:leading-6"
                     placeholder="Create a password"
                   />
                 </div>

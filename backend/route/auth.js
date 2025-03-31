@@ -5,6 +5,9 @@ const {
   logout,
   getMe,
   googleLogin,
+  forgotPassword,
+  verifyOtp,
+  resetPassword,
 } = require("../controller/auth");
 const protectRoute = require("../middleware/protectRoute");
 
@@ -15,5 +18,8 @@ authRouter.post("/signup", signup);
 authRouter.post("/login", login);
 authRouter.post("/logout", logout);
 authRouter.post("/google-login", googleLogin);
+authRouter.post("/forgot-password", forgotPassword);
+authRouter.post("/verify-otp", verifyOtp);
+authRouter.post("/reset-password", resetPassword);
 
 module.exports = authRouter;

@@ -143,7 +143,7 @@ function Login() {
                     required
                     value={formData.username}
                     onChange={handleInputChange}
-                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-white sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none sm:text-sm sm:leading-6"
                     placeholder="Enter your username"
                   />
                 </div>
@@ -164,13 +164,13 @@ function Login() {
                     required
                     value={formData.password}
                     onChange={handleInputChange}
-                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-white sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 bg-zinc-900 py-2 px-3 text-white shadow-sm ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-zinc-500 focus:outline-none sm:text-sm sm:leading-6"
                     placeholder="Enter your password"
                   />
                 </div>
                 <div className="flex justify-end mt-1">
                   <a
-                    href="#"
+                    href="/forgot-password"
                     className="text-sm font-semibold text-zinc-400 hover:text-white"
                   >
                     Forgot password?
@@ -182,7 +182,7 @@ function Login() {
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-white hover:bg-zinc-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transition-all duration-200"
+                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-white hover:bg-zinc-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500 transition-all duration-200"
                 >
                   {isPending ? (
                     <span className="flex items-center gap-2">
