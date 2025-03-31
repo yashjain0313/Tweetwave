@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { isAxiosError } from "axios";
 import toast from "react-hot-toast";
 import { signInWithGoogle } from "../../utils/firebase/firebase.ts";
+import api from "../../utils/api";
 
 interface FormInputs {
   username: string;
@@ -29,22 +30,13 @@ function Login() {
   } = useMutation({
     mutationFn: async ({ username, password }: FormInputs) => {
       try {
-        const res = await axios.post(
-          "/api/auth/login",
-          {
-            username,
-            password,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        // Use our configured API utility instead of axios directly
+        const res = await api.post("/auth/login", { username, password });
+        console.log("Login response:", res.data);
         queryClient.invalidateQueries({ queryKey: ["authUser"] });
         return res.data;
       } catch (error) {
-        console.log(error);
+        console.log("Login error:", error);
 
         if (axios.isAxiosError(error)) {
           const errorMsg = isAxiosError(error)
@@ -55,8 +47,12 @@ function Login() {
           console.error(error);
           toast.error("An unexpected error occurred");
         }
-        return;
+        throw error;
       }
+    },
+    onSuccess: (data) => {
+      toast.success("Login successful");
+      navigate("/");
     },
   });
 

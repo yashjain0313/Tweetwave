@@ -23,25 +23,48 @@ v2.config({
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// Configure CORS with appropriate origins
+const allowedOrigins = [
+  "https://tweetwave.onrender.com",
+  "http://localhost:5173",
+  "http://localhost:3000",
+  // For testing directly in browser
+  "https://tweetwavee.onrender.com",
+];
+
+// CORS middleware setup - this is critical for authentication across domains
 app.use(
   cors({
-    origin: ["https://tweetwave.onrender.com", "http://localhost:5173"],
-    credentials: true,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps, curl, postman)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg =
+          "The CORS policy for this site does not allow access from the specified Origin.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
+    credentials: true, // This is important for cookies/authentication
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
 );
+
+// Handle OPTIONS preflight requests
+app.options("*", cors());
+
+// Body parser and cookie middleware
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// API Routes - these must come BEFORE the static file middleware
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/notifications", notificationsRoutes);
-
-// Handle OPTIONS requests for CORS preflight
-app.options("*", cors());
 
 // Serve static frontend in production
 const nodeEnv = process.env.NODE_ENV
@@ -49,30 +72,27 @@ const nodeEnv = process.env.NODE_ENV
   : "development";
 console.log(`Current NODE_ENV: ${nodeEnv}`);
 
+// Add a simple test route to check if the API is accessible
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API is working properly", env: nodeEnv });
+});
+
+// All other routes are handled depending on environment
 if (nodeEnv === "production") {
   const parentDir = path.resolve(__dirname, "..");
   const distPath = path.join(parentDir, "frontend", "dist");
 
   console.log(`Looking for frontend build at: ${distPath}`);
 
-  // Check if the frontend build directory exists
   if (fs.existsSync(distPath)) {
     console.log("Frontend build directory found, serving static files");
-
-    // Serve static files from the dist directory
     app.use(express.static(distPath));
 
-    // This must be the LAST route
-    // It ensures that all routes that aren't API routes or static files
-    // are handled by React Router
     app.get("*", (req, res) => {
-      // Always send the index.html for any unknown routes
-      // This is crucial for Single Page Apps with client-side routing
       res.sendFile(path.join(distPath, "index.html"));
     });
   } else {
     console.error("Frontend build directory not found at:", distPath);
-    // Add a fallback route if dist folder isn't found
     app.get("*", (req, res) => {
       res
         .status(404)
@@ -82,7 +102,6 @@ if (nodeEnv === "production") {
     });
   }
 } else {
-  // In development mode, provide a simple indication that the API is running
   app.get("/", (req, res) => {
     res.send("Tweetwave API is running in development mode");
   });
