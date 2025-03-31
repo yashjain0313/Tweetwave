@@ -7,6 +7,7 @@
 /frontend/build
 /dist
 /build
+.DS_Store
 
 # Testing
 /coverage
