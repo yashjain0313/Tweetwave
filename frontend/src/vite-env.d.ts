@@ -12,3 +12,14 @@ interface ImportMeta {
     [key: string]: string | undefined;
   };
 }
+
+// Fix for JSX.IntrinsicElements not existing
+import React from "react";
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      [elemName: string]: any;
+    }
+  }
+}
