@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    base: "/",
     server: {
       proxy: {
         "/api": {
@@ -21,6 +22,9 @@ export default defineConfig(({ mode }) => {
       outDir: "dist",
       sourcemap: false,
       minify: true,
+      // Ensure we generate with correct paths
+      assetsDir: "assets",
+      emptyOutDir: true,
     },
     define: {
       // Make environment variables available in frontend code
