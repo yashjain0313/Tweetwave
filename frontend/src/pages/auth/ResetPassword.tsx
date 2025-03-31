@@ -63,7 +63,7 @@ const ResetPassword = () => {
         throw error;
       }
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Password reset successful");
       // Clear session storage items
       sessionStorage.removeItem("resetEmail");

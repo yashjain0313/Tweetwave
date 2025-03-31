@@ -41,7 +41,7 @@ const ForgotPassword = () => {
         throw error;
       }
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("OTP sent to your email");
       // Update state to indicate submission success and store email for next step
       setFormData((prev) => ({ ...prev, submitted: true }));
