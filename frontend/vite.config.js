@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
       proxy: {
         "/api": {
           target: isProduction
-            ? "https://tweetwave-4.onrender.com"
+            ? "https://tweetwavee.onrender.com" // Updated to correct backend URL
             : "http://localhost:3000",
           changeOrigin: true,
         },
@@ -22,12 +22,10 @@ export default defineConfig(({ mode }) => {
       outDir: "dist",
       sourcemap: false,
       minify: true,
-      // Ensure we generate with correct paths
       assetsDir: "assets",
       emptyOutDir: true,
     },
     define: {
-      // Make environment variables available in frontend code
       __APP_ENV__: JSON.stringify(mode),
     },
   };

@@ -12,6 +12,7 @@ const fs = require("fs");
 
 dotenv.config();
 
+// Cloudinary configuration
 v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -21,11 +22,12 @@ v2.config({
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// API Routes
+// API Routes - these must come BEFORE the static file middleware
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
@@ -47,16 +49,31 @@ if (nodeEnv === "production") {
   if (fs.existsSync(distPath)) {
     console.log("Frontend build directory found, serving static files");
 
+    // Serve static files from the dist directory
     app.use(express.static(distPath));
 
+    // This must be the LAST route
+    // It ensures that all routes that aren't API routes or static files
+    // are handled by React Router
     app.get("*", (req, res) => {
+      // Always send the index.html for any unknown routes
+      // This is crucial for Single Page Apps with client-side routing
       res.sendFile(path.join(distPath, "index.html"));
     });
   } else {
     console.error("Frontend build directory not found at:", distPath);
+    // Add a fallback route if dist folder isn't found
+    app.get("*", (req, res) => {
+      res
+        .status(404)
+        .send(
+          "Application not properly built. Please check the deployment logs."
+        );
+    });
   }
 }
 
+// Start the server
 app.listen(PORT, () => {
   console.log(`Tweetwave app listening on port ${PORT}!`);
   console.log(`Environment: ${nodeEnv}`);
