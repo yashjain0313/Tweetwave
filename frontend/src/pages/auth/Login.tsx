@@ -50,7 +50,7 @@ function Login() {
         throw error;
       }
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Login successful");
       navigate("/");
     },
