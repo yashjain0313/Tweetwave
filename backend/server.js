@@ -9,6 +9,7 @@ const connectMongoDB = require("./db/connectMongoDB");
 const postRoutes = require("./route/post");
 const notificationsRoutes = require("./route/notification");
 const fs = require("fs");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -23,6 +24,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
+app.use(
+  cors({
+    origin: ["https://tweetwave.onrender.com", "http://localhost:5173"],
+    credentials: true,
+  })
+);
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -32,6 +39,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/notifications", notificationsRoutes);
+
+// Handle OPTIONS requests for CORS preflight
+app.options("*", cors());
 
 // Serve static frontend in production
 const nodeEnv = process.env.NODE_ENV
@@ -71,6 +81,11 @@ if (nodeEnv === "production") {
         );
     });
   }
+} else {
+  // In development mode, provide a simple indication that the API is running
+  app.get("/", (req, res) => {
+    res.send("Tweetwave API is running in development mode");
+  });
 }
 
 // Start the server
